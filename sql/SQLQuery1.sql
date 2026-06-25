@@ -1,0 +1,25 @@
+-- Create the database
+CREATE DATABASE dbThobaPlug;
+GO
+
+-- Users table
+CREATE TABLE Userr (
+    userr_id     INT IDENTITY(1,1) PRIMARY KEY,
+    username    VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at  DATETIME DEFAULT GETDATE()
+);
+GO
+
+-- Messages table
+CREATE TABLE Messagee (
+    message_id  INT IDENTITY(1,1) PRIMARY KEY,
+    sender_id   INT NOT NULL,
+    recipient_id INT NULL,
+    content     NVARCHAR(1000) NOT NULL,
+    sent_at     DATETIME DEFAULT GETDATE(),
+    is_private  BIT DEFAULT 0,
+    FOREIGN KEY (sender_id) REFERENCES Userr(userr_id),
+    FOREIGN KEY (recipient_id) REFERENCES Userr(userr_id)
+);
+GO
