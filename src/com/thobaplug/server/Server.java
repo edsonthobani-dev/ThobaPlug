@@ -1,27 +1,34 @@
 package com.thobaplug.server;
 
-import com.thobaplug.database.UserDAO;
-import com.thobaplug.model.User;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
+
+    private static final int PORT = 5000;
+    private static ConcurrentHashMap<String, ClientHandler> onlineClients
+            = new ConcurrentHashMap<>();
+
     public static void main(String[] args) {
+        ExecutorService threadPool = Executors.newCachedThreadPool();
+        System.out.println("✓ ThobaPlug server started on port " + PORT);
 
-        UserDAO userDAO = new UserDAO();
-
-        // Test registration
-        userDAO.registerUser("Thobani", "password123");
-        userDAO.registerUser("Thobani", "password123"); // should say duplicate
-
-        // Test login
-        User user = userDAO.loginUser("Thobani", "password123");
-        if (user != null) {
-            System.out.println("Logged in as: " + user);
-        }
-
-        // Test wrong password
-        User fail = userDAO.loginUser("Thobani", "wrongpassword");
-        if (fail == null) {
-            System.out.println("✓ Wrong password correctly rejected");
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("→ New connection from: " +
+                    clientSocket.getInetAddress().getHostAddress());
+                ClientHandler handler = new ClientHandler(clientSocket, onlineClients);
+                threadPool.execute(handler);
+            }
+        } catch (IOException e) {
+            System.out.println("✗ Server error: " + e.getMessage());
+        } finally {
+            threadPool.shutdown();
         }
     }
 }
