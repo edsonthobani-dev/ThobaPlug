@@ -11,7 +11,6 @@ import java.sql.SQLException;
 /**
  * 
  */
-
 public class DatabaseManager {
 
     private static final String SERVER   = "DESKTOP-VEHC780\\SQLEXPRESS";
