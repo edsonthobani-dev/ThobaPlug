@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.thobaplug.client.RegisterController"
+      alignment="CENTER"
+      spacing="15"
+      style="-fx-background-color: #0F172A;">
+
+    <padding>
+        <Insets top="60" right="80" bottom="60" left="80"/>
+    </padding>
+
+    <Label text="ThobaPlug"
+           style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #3B82F6;"/>
+
+    <Label text="Create your account"
+           style="-fx-font-size: 14px; -fx-text-fill: #64748B;"/>
+
+    <VBox spacing="5" maxWidth="300">
+        <Label text="Username"
+               style="-fx-text-fill: #94A3B8; -fx-font-size: 13px;"/>
+        <TextField fx:id="usernameField"
+                   promptText="Choose a username"
+                   style="-fx-background-color: #1E293B;
+                          -fx-text-fill: white;
+                          -fx-prompt-text-fill: #475569;
+                          -fx-border-color: #334155;
+                          -fx-border-radius: 8;
+                          -fx-background-radius: 8;
+                          -fx-padding: 10 14 10 14;
+                          -fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox spacing="5" maxWidth="300">
+        <Label text="Password"
+               style="-fx-text-fill: #94A3B8; -fx-font-size: 13px;"/>
+        <PasswordField fx:id="passwordField"
+                       promptText="Min 8 characters"
+                       style="-fx-background-color: #1E293B;
+                              -fx-text-fill: white;
+                              -fx-prompt-text-fill: #475569;
+                              -fx-border-color: #334155;
+                              -fx-border-radius: 8;
+                              -fx-background-radius: 8;
+                              -fx-padding: 10 14 10 14;
+                              -fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox spacing="5" maxWidth="300">
+        <Label text="Confirm Password"
+               style="-fx-text-fill: #94A3B8; -fx-font-size: 13px;"/>
+        <PasswordField fx:id="confirmPasswordField"
+                       promptText="Repeat your password"
+                       style="-fx-background-color: #1E293B;
+                              -fx-text-fill: white;
+                              -fx-prompt-text-fill: #475569;
+                              -fx-border-color: #334155;
+                              -fx-border-radius: 8;
+                              -fx-background-radius: 8;
+                              -fx-padding: 10 14 10 14;
+                              -fx-font-size: 14px;"/>
+    </VBox>
+
+    <Label fx:id="errorLabel"
+           text=""
+           style="-fx-text-fill: #EF4444; -fx-font-size: 12px;"/>
+
+    <Label fx:id="successLabel"
+           text=""
+           style="-fx-text-fill: #22C55E; -fx-font-size: 12px;"/>
+
+    <Button fx:id="registerButton"
+            text="Create Account"
+            onAction="#handleRegister"
+            maxWidth="300"
+            style="-fx-background-color: #3B82F6;
+                   -fx-text-fill: white;
+                   -fx-font-size: 14px;
+                   -fx-font-weight: bold;
+                   -fx-background-radius: 8;
+                   -fx-padding: 10 0 10 0;
+                   -fx-cursor: hand;"/>
+
+    <Button text="Already have an account? Sign in"
+            onAction="#handleBack"
+            style="-fx-background-color: transparent;
+                   -fx-text-fill: #3B82F6;
+                   -fx-font-size: 13px;
+                   -fx-cursor: hand;
+                   -fx-border-color: transparent;"/>
+
+</VBox>

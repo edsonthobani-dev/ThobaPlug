@@ -121,7 +121,9 @@ public class Client {
             System.out.println("✗ Error disconnecting: " + e.getMessage());
         }
     }
-
+    public void setMessageListener(IMessageListener listener) {
+        this.messageListener = listener;
+    }
     private void send(String message) {
         if (writer != null) writer.println(message);
     }

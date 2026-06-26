@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.thobaplug.client.LoginController"
+      alignment="CENTER"
+      spacing="15"
+      style="-fx-background-color: #0F172A;">
+
+    <padding>
+        <Insets top="60" right="80" bottom="60" left="80"/>
+    </padding>
+
+    <!-- Logo -->
+    <Label text="ThobaPlug"
+           style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #3B82F6;"/>
+
+    <Label text="Connect with everyone"
+           style="-fx-font-size: 14px; -fx-text-fill: #64748B;"/>
+
+    <VBox spacing="5" maxWidth="300">
+        <Label text="Username"
+               style="-fx-text-fill: #94A3B8; -fx-font-size: 13px;"/>
+        <TextField fx:id="usernameField"
+                   promptText="Enter your username"
+                   style="-fx-background-color: #1E293B;
+                          -fx-text-fill: white;
+                          -fx-prompt-text-fill: #475569;
+                          -fx-border-color: #334155;
+                          -fx-border-radius: 8;
+                          -fx-background-radius: 8;
+                          -fx-padding: 10 14 10 14;
+                          -fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox spacing="5" maxWidth="300">
+        <Label text="Password"
+               style="-fx-text-fill: #94A3B8; -fx-font-size: 13px;"/>
+        <PasswordField fx:id="passwordField"
+                       promptText="Enter your password"
+                       style="-fx-background-color: #1E293B;
+                              -fx-text-fill: white;
+                              -fx-prompt-text-fill: #475569;
+                              -fx-border-color: #334155;
+                              -fx-border-radius: 8;
+                              -fx-background-radius: 8;
+                              -fx-padding: 10 14 10 14;
+                              -fx-font-size: 14px;"/>
+    </VBox>
+
+    <!-- Error label -->
+    <Label fx:id="errorLabel"
+           text=""
+           style="-fx-text-fill: #EF4444; -fx-font-size: 12px;"/>
+
+    <!-- Login button -->
+    <Button fx:id="loginButton"
+            text="Sign In"
+            onAction="#handleLogin"
+            maxWidth="300"
+            style="-fx-background-color: #3B82F6;
+                   -fx-text-fill: white;
+                   -fx-font-size: 14px;
+                   -fx-font-weight: bold;
+                   -fx-background-radius: 8;
+                   -fx-padding: 10 0 10 0;
+                   -fx-cursor: hand;"/>
+
+    <!-- Register link -->
+    <Button text="Don't have an account? Register"
+            onAction="#handleRegister"
+            style="-fx-background-color: transparent;
+                   -fx-text-fill: #3B82F6;
+                   -fx-font-size: 13px;
+                   -fx-cursor: hand;
+                   -fx-border-color: transparent;"/>
+
+</VBox>

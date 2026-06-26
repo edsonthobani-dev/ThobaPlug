@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.thobaplug.client.ChatController"
+            style="-fx-background-color: #0F172A;">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="15"
+              style="-fx-background-color: #1E293B;
+                     -fx-padding: 12 20 12 20;
+                     -fx-border-color: #334155;
+                     -fx-border-width: 0 0 1 0;">
+
+            <Label text="ThobaPlug"
+                   style="-fx-font-size: 20px;
+                          -fx-font-weight: bold;
+                          -fx-text-fill: #3B82F6;"/>
+
+            <Label text="Global Chat"
+                   style="-fx-font-size: 13px;
+                          -fx-text-fill: #64748B;"/>
+
+            <HBox HBox.hgrow="ALWAYS"/>
+
+            <Label fx:id="onlineCountLabel"
+                   text="0 online"
+                   style="-fx-background-color: #0F3460;
+                          -fx-text-fill: #60A5FA;
+                          -fx-font-size: 12px;
+                          -fx-padding: 4 10 4 10;
+                          -fx-background-radius: 20;"/>
+
+            <Label fx:id="usernameLabel"
+                   text=""
+                   style="-fx-text-fill: #94A3B8;
+                          -fx-font-size: 13px;"/>
+
+            <Button text="Logout"
+                    onAction="#handleLogout"
+                    style="-fx-background-color: #EF4444;
+                           -fx-text-fill: white;
+                           -fx-font-size: 12px;
+                           -fx-background-radius: 6;
+                           -fx-padding: 5 12 5 12;
+                           -fx-cursor: hand;"/>
+        </HBox>
+    </top>
+
+    <!-- LEFT SIDEBAR - Online Users -->
+    <left>
+        <VBox spacing="0"
+              prefWidth="200"
+              style="-fx-background-color: #1E293B;
+                     -fx-border-color: #334155;
+                     -fx-border-width: 0 1 0 0;">
+
+            <Label text="ONLINE NOW"
+                   style="-fx-text-fill: #475569;
+                          -fx-font-size: 11px;
+                          -fx-font-weight: bold;
+                          -fx-padding: 16 16 8 16;"/>
+
+            <ListView fx:id="onlineUsersList"
+                      VBox.vgrow="ALWAYS"
+                      style="-fx-background-color: transparent;
+                             -fx-border-color: transparent;"/>
+        </VBox>
+    </left>
+
+    <!-- CENTER - Chat Area -->
+    <center>
+        <VBox style="-fx-background-color: #0F172A;">
+
+            <!-- Messages area -->
+            <ScrollPane fx:id="scrollPane"
+                        VBox.vgrow="ALWAYS"
+                        fitToWidth="true"
+                        style="-fx-background-color: transparent;
+                               -fx-background: #0F172A;
+                               -fx-border-color: transparent;">
+                <VBox fx:id="messagesBox"
+                      spacing="8"
+                      style="-fx-padding: 16;">
+                </VBox>
+            </ScrollPane>
+
+            <!-- Typing indicator -->
+            <Label fx:id="typingLabel"
+                   text=""
+                   style="-fx-text-fill: #475569;
+                          -fx-font-size: 12px;
+                          -fx-font-style: italic;
+                          -fx-padding: 0 16 4 16;"/>
+
+            <!-- Message input bar -->
+            <HBox spacing="10"
+                  alignment="CENTER"
+                  style="-fx-background-color: #1E293B;
+                         -fx-padding: 12 16 12 16;
+                         -fx-border-color: #334155;
+                         -fx-border-width: 1 0 0 0;">
+
+                <TextField fx:id="messageField"
+                           promptText="Type a message..."
+                           onKeyPressed="#handleKeyPress"
+                           onKeyTyped="#handleTyping"
+                           HBox.hgrow="ALWAYS"
+                           style="-fx-background-color: #0F172A;
+                                  -fx-text-fill: white;
+                                  -fx-prompt-text-fill: #475569;
+                                  -fx-border-color: #334155;
+                                  -fx-border-radius: 20;
+                                  -fx-background-radius: 20;
+                                  -fx-padding: 10 16 10 16;
+                                  -fx-font-size: 14px;"/>
+
+                <Button fx:id="sendButton"
+                        text="Send"
+                        onAction="#handleSend"
+                        style="-fx-background-color: #3B82F6;
+                               -fx-text-fill: white;
+                               -fx-font-size: 13px;
+                               -fx-font-weight: bold;
+                               -fx-background-radius: 20;
+                               -fx-padding: 10 20 10 20;
+                               -fx-cursor: hand;"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

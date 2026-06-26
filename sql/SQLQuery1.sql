@@ -23,3 +23,7 @@ CREATE TABLE Messagee (
     FOREIGN KEY (recipient_id) REFERENCES Userr(userr_id)
 );
 GO
+
+USE dbThobaPlug;
+DELETE FROM Messagee;
+DELETE FROM Userr;
