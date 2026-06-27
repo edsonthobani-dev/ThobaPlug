@@ -58,10 +58,14 @@ public class Client {
             try {
                 String raw;
                 while (running && (raw = reader.readLine()) != null) {
-                 
-                    if (messageListener != null) {
+                    if (raw.trim().isEmpty()) continue;
+                    try {
                         JsonObject json = gson.fromJson(raw, JsonObject.class);
-                        messageListener.onMessageReceived(json);
+                        if (messageListener != null) {
+                            messageListener.onMessageReceived(json);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("✗ Failed to parse message: " + e.getMessage());
                     }
                 }
             } catch (IOException e) {

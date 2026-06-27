@@ -52,23 +52,25 @@ public class ClientHandler implements Runnable {
 														}
     @Override
     public void run() {
-       
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
 
             String rawMessage;
             while ((rawMessage = reader.readLine()) != null) {
+                if (rawMessage.trim().isEmpty()) continue;
                 handleMessage(rawMessage);
             }
         } catch (IOException e) {
-        	logger.warning("Client disconnected: " +
-                (currentUser != null ? currentUser.getUsername() : "unknown"));
+            if (currentUser != null) {
+                logger.warning("Connection lost for: " + currentUser.getUsername());
+            } else {
+                logger.warning("Unknown client disconnected before login");
+            }
         } finally {
             disconnect();
         }
     }
-
     private void handleMessage(String raw) {
         if (raw == null || raw.trim().isEmpty()) return;
         try {
@@ -189,13 +191,27 @@ public class ClientHandler implements Runnable {
             sendMessage(buildResponse("ERROR", "Not authenticated"));
             return;
         }
-        String content = json.get("content").getAsString();
+        if (!json.has("content")) {
+            sendMessage(buildResponse("ERROR", "Missing content field"));
+            return;
+        }
+        String content = json.get("content").getAsString().trim();
+        if (content.isEmpty()) {
+            sendMessage(buildResponse("ERROR", "Message cannot be empty"));
+            return;
+        }
+        if (content.length() > 1000) {
+            sendMessage(buildResponse("ERROR", "Message too long (max 1000 characters)"));
+            return;
+        }
 
         Message msg = new Message(currentUser.getUserr_id(), 0, content, false);
         msg.setSenderUsername(currentUser.getUsername());
-        
+
         boolean saved = messageDAO.saveMessage(msg);
-        System.out.println("Message save result: " + saved);
+        if (!saved) {
+            logger.error("Failed to save message from: " + currentUser.getUsername());
+        }
 
         JsonObject broadcast = new JsonObject();
         broadcast.addProperty("type", "BROADCAST");

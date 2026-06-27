@@ -2,3 +2,28 @@
 [2026-06-27 16:52:27] [INFO] ThobaPlug Server Started
 [2026-06-27 16:52:27] [INFO] ═══════════════════════════════════════
 [2026-06-27 16:52:27] [INFO] ThobaPlug server started on port 5000
+[2026-06-27 16:58:07] [INFO] ═══════════════════════════════════════
+[2026-06-27 16:58:07] [INFO] ThobaPlug Server Started
+[2026-06-27 16:58:07] [INFO] ═══════════════════════════════════════
+[2026-06-27 16:58:07] [INFO] ThobaPlug server started on port 5000
+[2026-06-27 16:58:34] [INFO] New connection from: 127.0.0.1
+[2026-06-27 16:59:00] [INFO] Thobani joined. Online: 1
+[2026-06-27 16:59:13] [INFO] New connection from: 127.0.0.1
+[2026-06-27 17:00:03] [INFO] Alwande joined. Online: 2
+[2026-06-27 17:00:37] [INFO] Thobani left. Online: 1
+[2026-06-27 17:00:37] [INFO] New connection from: 127.0.0.1
+[2026-06-27 17:00:51] [INFO] Edison joined. Online: 2
+[2026-06-27 17:01:16] [INFO] Alwande left. Online: 1
+[2026-06-27 17:01:16] [INFO] New connection from: 127.0.0.1
+[2026-06-27 17:01:20] [INFO] Edison left. Online: 0
+[2026-06-27 17:01:20] [INFO] New connection from: 127.0.0.1
+[2026-06-27 17:01:58] [WARNING] Unknown client disconnected before login
+[2026-06-27 17:02:40] [INFO] ═══════════════════════════════════════
+[2026-06-27 17:02:40] [INFO] ThobaPlug Server Started
+[2026-06-27 17:02:40] [INFO] ═══════════════════════════════════════
+[2026-06-27 17:02:40] [INFO] ThobaPlug server started on port 5000
+[2026-06-27 17:03:04] [INFO] New connection from: 127.0.0.1
+[2026-06-27 17:03:21] [INFO] Thobani joined. Online: 1
+[2026-06-27 17:03:42] [INFO] Thobani left. Online: 0
+[2026-06-27 17:03:42] [INFO] New connection from: 127.0.0.1
+[2026-06-27 17:03:45] [WARNING] Unknown client disconnected before login

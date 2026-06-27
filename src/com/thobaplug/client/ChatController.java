@@ -74,6 +74,14 @@ public class ChatController implements IMessageListener {
     private void handleSend() {
         String content = messageField.getText().trim();
         if (content.isEmpty()) return;
+        if (content.length() > 1000) {
+            typingLabel.setText("Message too long (max 1000 characters)");
+            return;
+        }
+        if (!client.isConnected()) {
+            typingLabel.setText("Not connected to server");
+            return;
+        }
         client.sendBroadcast(content);
         messageField.clear();
     }
