@@ -10,6 +10,7 @@ import com.thobaplug.database.MessageDAO;
 import com.thobaplug.database.UserDAO;
 import com.thobaplug.model.Message;
 import com.thobaplug.model.User;
+import com.thobaplug.util.Logger;
 
 import java.io.*;
 import java.net.Socket;
@@ -27,20 +28,28 @@ public class ClientHandler implements Runnable {
     private ConcurrentHashMap<String, ClientHandler> onlineClients;
     private UserDAO userDAO;
     private MessageDAO messageDAO;
+    private Logger logger;
     private Gson gson = new GsonBuilder()
-    	    .registerTypeAdapter(LocalDateTime.class, 
-    	        (com.google.gson.JsonSerializer<java.time.LocalDateTime>) 
-    	        (src, typeOfSrc, context) -> new com.google.gson.JsonPrimitive(src.toString()))
-    	    .create();
+					    	    .registerTypeAdapter(LocalDateTime.class, 
+					    	        (com.google.gson.JsonSerializer<java.time.LocalDateTime>) 
+					    	        (src, typeOfSrc, context) -> new com.google.gson.JsonPrimitive(src.toString()))
+					    	    .create();
 
-    public ClientHandler(Socket socket, ConcurrentHashMap<String, ClientHandler> onlineClients) {
-        this.socket        = socket;
-        this.onlineClients = onlineClients;
-        this.userDAO       = new UserDAO();
-        this.messageDAO    = new MessageDAO();
-        this.gson          = new Gson();
-    }
-
+    public ClientHandler(Socket socket, 
+				            ConcurrentHashMap<String, ClientHandler> onlineClients,
+				            Logger logger) {
+				this.socket        = socket;
+				this.onlineClients = onlineClients;
+				this.logger        = logger;
+				this.userDAO       = new UserDAO();
+				this.messageDAO    = new MessageDAO();
+				this.gson          = new GsonBuilder()
+														.registerTypeAdapter(LocalDateTime.class,
+														   (com.google.gson.JsonSerializer<java.time.LocalDateTime>)
+														   (src, typeOfSrc, context) -> 
+														       new com.google.gson.JsonPrimitive(src.toString()))
+														.create();
+														}
     @Override
     public void run() {
        
@@ -53,7 +62,7 @@ public class ClientHandler implements Runnable {
                 handleMessage(rawMessage);
             }
         } catch (IOException e) {
-            System.out.println("Client disconnected: " +
+        	logger.warning("Client disconnected: " +
                 (currentUser != null ? currentUser.getUsername() : "unknown"));
         } finally {
             disconnect();
@@ -170,8 +179,7 @@ public class ClientHandler implements Runnable {
                 }
             }).start();
             
-            System.out.println("✓ " + username + " joined. Online: " +
-                               onlineClients.size());
+            logger.info(username + " joined. Online: " + onlineClients.size());
         } else {
             sendMessage(buildResponse("AUTH_FAIL", "Invalid username or password"));
         }
@@ -293,8 +301,7 @@ public class ClientHandler implements Runnable {
         try {
             if (currentUser != null) {
                 onlineClients.remove(currentUser.getUsername());
-                System.out.println("✗ " + currentUser.getUsername() +
-                    " left. Online: " + onlineClients.size());
+                logger.info(currentUser.getUsername() + " left. Online: " + onlineClients.size());
                 broadcastUserList();
             }
             if (socket != null && !socket.isClosed()) socket.close();

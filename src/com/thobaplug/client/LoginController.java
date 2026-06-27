@@ -69,6 +69,7 @@ public class LoginController implements IMessageListener {
     public void onMessageReceived(JsonObject message) {
         String type = message.get("type").getAsString();
         System.out.println("LoginController received: " + type);
+        
       
         switch (type) {
             case "AUTH_SUCCESS":
