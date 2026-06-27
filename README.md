@@ -169,6 +169,5 @@ on every operation.
 ## Author
 
 **Thobani** — [@edsonthobani-dev](https://github.com/edsonthobani-dev)
-**Call** - [Thobani](0680699772)
 
 Second-year Computer Science & Informatics student 
