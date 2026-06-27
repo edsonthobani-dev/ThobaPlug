@@ -27,3 +27,6 @@ GO
 USE dbThobaPlug;
 DELETE FROM Messagee;
 DELETE FROM Userr;
+
+USE dbThobaPlug;
+SELECT * FROM Messagee;

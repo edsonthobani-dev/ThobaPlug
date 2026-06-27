@@ -25,7 +25,8 @@ public class MessageDAO {
 
     // Save a message to the database
     public boolean saveMessage(Message message) {
-        String sql = "INSERT INTO Messagee (sender_id, recipient_id, content, is_private) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Messagee (sender_id, recipient_id, content, is_private) " +
+                     "VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, message.getSender_id());
@@ -34,12 +35,13 @@ public class MessageDAO {
             } else {
                 stmt.setInt(2, message.getRecipient_id());
             }
-            stmt.setString(3, message.getContent());
+            stmt.setNString(3, message.getContent());
             stmt.setBoolean(4, message.isIs_private());
-            stmt.executeUpdate();
+            int rows = stmt.executeUpdate();
+            System.out.println("✓ Message saved, rows affected: " + rows);
             return true;
         } catch (SQLException e) {
-            System.out.println("Save message failed: " + e.getMessage());
+            System.out.println("✗ Save message failed: " + e.getMessage());
             return false;
         }
     }
@@ -47,16 +49,24 @@ public class MessageDAO {
     // Load last 50 global messages
     public List<Message> loadGlobalHistory() {
         List<Message> messages = new ArrayList<>();
-        String sql = "SELECT TOP 50 m.message_id, m.sender_id, m.content, m.sent_at, u.username " +
-                     "FROM Messagee m "
-                     +"JOIN Userr u"
-                     +"ON m.sender_id = u.userr_id " +
-                     "WHERE m.is_private = 0 "
-                     +"ORDER BY m.sent_at ASC";
+        String sql = "SELECT * FROM (" +
+                "SELECT TOP 50 m.message_id, m.sender_id, m.content, m.sent_at, u.username " +
+                "FROM Messagee m " +
+                "INNER JOIN Userr u ON m.sender_id = u.userr_id " +
+                "WHERE m.is_private = 0 " +
+                "ORDER BY m.sent_at DESC" +
+                ") sub ORDER BY sent_at ASC";
         try {
-            PreparedStatement stmt = connection.prepareStatement(sql);
+            PreparedStatement stmt = connection.prepareStatement(
+                sql,
+                ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_READ_ONLY
+            );
             ResultSet rs = stmt.executeQuery();
+            rs.beforeFirst();
             while (rs.next()) {
+                System.out.println("Row: " + rs.getString("username") +
+                                   " | " + rs.getString("content"));
                 Message msg = new Message(
                     rs.getInt("sender_id"), 0,
                     rs.getString("content"), false
@@ -66,8 +76,9 @@ public class MessageDAO {
                 msg.setSent_at(rs.getTimestamp("sent_at").toLocalDateTime());
                 messages.add(msg);
             }
+            System.out.println("✓ History loaded: " + messages.size() + " messages");
         } catch (SQLException e) {
-            System.out.println("Load global history failed: " + e.getMessage());
+            System.out.println("✗ Load global history failed: " + e.getMessage());
         }
         return messages;
     }

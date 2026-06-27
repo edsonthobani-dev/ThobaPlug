@@ -4,6 +4,7 @@
 package com.thobaplug.client;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -20,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -34,20 +36,40 @@ public class ChatController implements IMessageListener {
     @FXML private Label typingLabel;
     @FXML private Label onlineCountLabel;
     @FXML private Label usernameLabel;
-
+    @FXML private Button logoutButton;
+    private volatile long chatLoadedAt = 0;
+    
+    
     private Client client;
     private String username;
     private Gson gson;
     private ScheduledExecutorService typingClearScheduler;
 
-    public void setClient(Client client, String username) {
+    public void initChat(Client client, String username) {
+        System.out.println("initChat() called - instance: " + this.hashCode());
         this.client   = client;
         this.username = username;
-        this.gson     = new Gson();
-        client.setMessageListener(this);
         usernameLabel.setText(username);
+        this.gson = new GsonBuilder()
+        	    .registerTypeAdapter(LocalDateTime.class,
+        	        (com.google.gson.JsonDeserializer<LocalDateTime>)
+        	        (json, type, context) -> LocalDateTime.parse(json.getAsString()))
+        	    .create();
+        // Set ready after short delay to prevent logout bleed
+        new Thread(() -> {
+            try {
+                Thread.sleep(1300);
+                chatLoadedAt = System.currentTimeMillis();
+                System.out.println("Chat ready - logout enabled");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
-
+    @FXML
+    public void initialize() {
+        System.out.println("ChatController initialize() called - instance: " + this.hashCode());
+    }
     @FXML
     private void handleSend() {
         String content = messageField.getText().trim();
@@ -67,17 +89,31 @@ public class ChatController implements IMessageListener {
     private void handleTyping() {
         client.sendTyping(null);
     }
-
     @FXML
     private void handleLogout() {
+        long now = System.currentTimeMillis();
+        long diff = now - chatLoadedAt;
+        if (chatLoadedAt == 0 || diff < 2000) {
+            System.out.println("Logout blocked");
+            return;
+        }
+        client.setMessageListener(null);
+        LoginController.screenSwitched = false;
         client.disconnect();
+        Client.resetInstance();
+
         try {
+            // Create fresh client for next login
+            Client newClient = Client.getInstance();
+            newClient.connect();
+
             FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/resources/LoginScreen.fxml"));
             Parent root = loader.load();
             Stage stage = (Stage) messageField.getScene().getWindow();
             stage.setScene(new Scene(root, 480, 600));
             stage.setTitle("ThobaPlug");
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,7 +138,8 @@ public class ChatController implements IMessageListener {
                 break;
 
             case "HISTORY":
-                String histJson  = message.get("messages").getAsString();
+                String histJson = message.get("messages").getAsString();
+                System.out.println("RAW HISTORY JSON: " + histJson);
                 JsonArray history = gson.fromJson(histJson, JsonArray.class);
                 Platform.runLater(() -> loadHistory(history));
                 break;
@@ -123,11 +160,14 @@ public class ChatController implements IMessageListener {
 
     @Override
     public void onDisconnected() {
-        Platform.runLater(() -> {
-            addSystemMessage("Disconnected from server");
-            sendButton.setDisable(true);
-            messageField.setDisable(true);
-        });
+        // Only show error if we didn't intentionally logout
+        if (chatLoadedAt != 0) {
+            Platform.runLater(() -> {
+                addSystemMessage("Disconnected from server");
+                sendButton.setDisable(true);
+                messageField.setDisable(true);
+            });
+        }
     }
 
     private void addMessage(String sender, String content,
@@ -208,6 +248,7 @@ public class ChatController implements IMessageListener {
     }
 
     private void loadHistory(JsonArray history) {
+        System.out.println("loadHistory() called with " + history.size() + " messages");
         if (history.size() == 0) {
             addSystemMessage("No previous messages. Start the conversation!");
             return;
@@ -215,6 +256,7 @@ public class ChatController implements IMessageListener {
         addSystemMessage("— Chat history —");
         for (JsonElement el : history) {
             JsonObject msg = el.getAsJsonObject();
+            System.out.println("Displaying: " + msg.keySet());
             addMessage(
                 msg.get("senderUsername").getAsString(),
                 msg.get("content").getAsString(),
@@ -228,9 +270,27 @@ public class ChatController implements IMessageListener {
     private void updateUserList(JsonArray users) {
         onlineUsersList.getItems().clear();
         for (JsonElement el : users) {
-            onlineUsersList.getItems().add(el.getAsString());
+            String user = el.getAsString();
+            onlineUsersList.getItems().add(user);
         }
         onlineCountLabel.setText(users.size() + " online");
+
+        onlineUsersList.setCellFactory(lv -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String user, boolean empty) {
+                super.updateItem(user, empty);
+                if (empty || user == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText("🟢  " + user);
+                    setStyle("-fx-text-fill: #E2E8F0;" +
+                             "-fx-font-size: 13px;" +
+                             "-fx-background-color: transparent;" +
+                             "-fx-padding: 6 12 6 12;");
+                }
+            }
+        });
     }
 
     private void showTyping(String sender) {

@@ -8,11 +8,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	  public static void main(String[] args) {
-	        launch(args);
-	    }
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Create and connect client once at app startup
+        Client client = Client.getInstance();
+        client.connect();
+
         Parent root = FXMLLoader.load(
             getClass().getResource("/resources/LoginScreen.fxml"));
         Scene scene = new Scene(root, 480, 600);
@@ -22,5 +23,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-  
+    public static void main(String[] args) {
+        launch(args);
+    }
 }

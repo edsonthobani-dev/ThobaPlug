@@ -4,6 +4,7 @@
 package com.thobaplug.server;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.thobaplug.database.MessageDAO;
 import com.thobaplug.database.UserDAO;
@@ -12,6 +13,7 @@ import com.thobaplug.model.User;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 /**
  * 
@@ -25,7 +27,11 @@ public class ClientHandler implements Runnable {
     private ConcurrentHashMap<String, ClientHandler> onlineClients;
     private UserDAO userDAO;
     private MessageDAO messageDAO;
-    private Gson gson;
+    private Gson gson = new GsonBuilder()
+    	    .registerTypeAdapter(LocalDateTime.class, 
+    	        (com.google.gson.JsonSerializer<java.time.LocalDateTime>) 
+    	        (src, typeOfSrc, context) -> new com.google.gson.JsonPrimitive(src.toString()))
+    	    .create();
 
     public ClientHandler(Socket socket, ConcurrentHashMap<String, ClientHandler> onlineClients) {
         this.socket        = socket;
@@ -37,6 +43,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("ClientHandler started: " + Thread.currentThread().getName());
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
@@ -54,6 +61,7 @@ public class ClientHandler implements Runnable {
     }
 
     private void handleMessage(String raw) {
+        if (raw == null || raw.trim().isEmpty()) return;
         try {
             JsonObject json = gson.fromJson(raw, JsonObject.class);
             String type = json.get("type").getAsString();
@@ -89,12 +97,22 @@ public class ClientHandler implements Runnable {
                 		disconnect();
                 		break;
                 	}
+                case "GET_HISTORY":
+                    if (currentUser != null) sendHistory();
+                    else sendMessage(buildResponse("ERROR", "Not authenticated"));
+                    break;
+                case "GET_USER_LIST":
+                    if (currentUser != null) sendUserListToMe();
+                    else sendMessage(buildResponse("ERROR", "Not authenticated"));
+                    break;
+                   
                 default:
                     sendMessage(buildResponse("ERROR", "Unknown message type"));
             }
         } catch (Exception e) {
             sendMessage(buildResponse("ERROR", "Invalid message format"));
         }
+        
     }
 
     private void handleRegister(JsonObject json) {
@@ -121,32 +139,44 @@ public class ClientHandler implements Runnable {
     private void handleLogin(JsonObject json) {
         String username = json.get("username").getAsString();
         String password = json.get("password").getAsString();
+        System.out.println("LOGIN attempt for: " + username + 
+                           " from thread: " + Thread.currentThread().getName());
 
         if (onlineClients.containsKey(username)) {
-            sendMessage(buildResponse("AUTH_FAIL", "User already logged in"));
-            return;
+            ClientHandler oldHandler = onlineClients.get(username);
+            if (oldHandler != this) {
+                onlineClients.remove(username);
+                System.out.println("Replaced stale session for: " + username);
+            } else {
+                sendMessage(buildResponse("AUTH_FAIL", "Already logged in"));
+                return;
+            }
         }
 
         User user = userDAO.loginUser(username, password);
         if (user != null) {
             currentUser = user;
             onlineClients.put(username, this);
-
-            // Send auth success
-            sendMessage(buildResponse("AUTH_SUCCESS", "Welcome to ThobaPlug, " + username + "!"));
-
-            // Send chat history
-            sendHistory();
-
-            // Broadcast updated user list to everyone
-            broadcastUserList();
-
-            System.out.println(" " + username + " joined. Online: " + onlineClients.size());
+            sendMessage(buildResponse("AUTH_SUCCESS",
+                        "Welcome to ThobaPlug, " + username + "!"));
+            
+            // Small delay to let client switch to ChatController before sending data
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1500);
+                    sendHistory();
+                    broadcastUserList();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+            
+            System.out.println("✓ " + username + " joined. Online: " +
+                               onlineClients.size());
         } else {
             sendMessage(buildResponse("AUTH_FAIL", "Invalid username or password"));
         }
     }
-
     private void handleBroadcast(JsonObject json) {
         if (currentUser == null) {
             sendMessage(buildResponse("ERROR", "Not authenticated"));
@@ -154,19 +184,18 @@ public class ClientHandler implements Runnable {
         }
         String content = json.get("content").getAsString();
 
-        // Save to database
         Message msg = new Message(currentUser.getUserr_id(), 0, content, false);
         msg.setSenderUsername(currentUser.getUsername());
-        messageDAO.saveMessage(msg);
+        
+        boolean saved = messageDAO.saveMessage(msg);
+        System.out.println("Message save result: " + saved);
 
-        // Build broadcast JSON
         JsonObject broadcast = new JsonObject();
         broadcast.addProperty("type", "BROADCAST");
         broadcast.addProperty("sender", currentUser.getUsername());
         broadcast.addProperty("content", content);
         broadcast.addProperty("timestamp", msg.getSent_at().toString());
 
-        // Send to ALL connected clients
         for (ClientHandler client : onlineClients.values()) {
             client.sendMessage(broadcast.toString());
         }
@@ -225,11 +254,24 @@ public class ClientHandler implements Runnable {
     }
 
     private void sendHistory() {
-        var history = messageDAO.loadGlobalHistory();
-        JsonObject historyMsg = new JsonObject();
-        historyMsg.addProperty("type", "HISTORY");
-        historyMsg.addProperty("messages", gson.toJson(history));
-        sendMessage(historyMsg.toString());
+        try {
+            var history = messageDAO.loadGlobalHistory();
+            com.google.gson.JsonArray arr = new com.google.gson.JsonArray();
+            for (com.thobaplug.model.Message msg : history) {
+                com.google.gson.JsonObject obj = new com.google.gson.JsonObject();
+                obj.addProperty("senderUsername", msg.getSenderUsername());
+                obj.addProperty("content", msg.getContent());
+                obj.addProperty("sentAt", msg.getSent_at().toString());
+                arr.add(obj);
+            }
+            JsonObject historyMsg = new JsonObject();
+            historyMsg.addProperty("type", "HISTORY");
+            historyMsg.addProperty("messages", arr.toString());
+            sendMessage(historyMsg.toString());
+            System.out.println("✓ History sent: " + history.size() + " messages");
+        } catch (Exception e) {
+            System.out.println("✗ sendHistory error: " + e.getMessage());
+        }
     }
 
     private void broadcastUserList() {
@@ -240,6 +282,12 @@ public class ClientHandler implements Runnable {
         for (ClientHandler client : onlineClients.values()) {
             client.sendMessage(json);
         }
+    }
+    private void sendUserListToMe() {
+        JsonObject userList = new JsonObject();
+        userList.addProperty("type", "USER_LIST");
+        userList.addProperty("users", gson.toJson(onlineClients.keySet()));
+        sendMessage(userList.toString());
     }
 
     private void disconnect() {

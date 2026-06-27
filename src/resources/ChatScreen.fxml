@@ -41,14 +41,16 @@
                    style="-fx-text-fill: #94A3B8;
                           -fx-font-size: 13px;"/>
 
-            <Button text="Logout"
-                    onAction="#handleLogout"
-                    style="-fx-background-color: #EF4444;
-                           -fx-text-fill: white;
-                           -fx-font-size: 12px;
-                           -fx-background-radius: 6;
-                           -fx-padding: 5 12 5 12;
-                           -fx-cursor: hand;"/>
+	        <Button fx:id="logoutButton"
+			        text="Logout"
+			        onAction="#handleLogout"
+			        focusTraversable="false"
+			        style="-fx-background-color: #EF4444;
+			               -fx-text-fill: white;
+			               -fx-font-size: 12px;
+			               -fx-background-radius: 6;
+			               -fx-padding: 5 12 5 12;
+			               -fx-cursor: hand;"/>
         </HBox>
     </top>
 
@@ -100,37 +102,37 @@
 
             <!-- Message input bar -->
             <HBox spacing="10"
-                  alignment="CENTER"
-                  style="-fx-background-color: #1E293B;
-                         -fx-padding: 12 16 12 16;
-                         -fx-border-color: #334155;
-                         -fx-border-width: 1 0 0 0;">
+      alignment="CENTER"
+      style="-fx-background-color: #1E293B;
+             -fx-padding: 12 16 12 16;
+             -fx-border-color: #334155;
+             -fx-border-width: 1 0 0 0;">
 
-                <TextField fx:id="messageField"
-                           promptText="Type a message..."
-                           onKeyPressed="#handleKeyPress"
-                           onKeyTyped="#handleTyping"
-                           HBox.hgrow="ALWAYS"
-                           style="-fx-background-color: #0F172A;
-                                  -fx-text-fill: white;
-                                  -fx-prompt-text-fill: #475569;
-                                  -fx-border-color: #334155;
-                                  -fx-border-radius: 20;
-                                  -fx-background-radius: 20;
-                                  -fx-padding: 10 16 10 16;
-                                  -fx-font-size: 14px;"/>
+    <TextField fx:id="messageField"
+               promptText="Type a message..."
+               onKeyPressed="#handleKeyPress"
+               onKeyTyped="#handleTyping"
+               HBox.hgrow="ALWAYS"
+               style="-fx-background-color: #0F172A;
+                      -fx-text-fill: white;
+                      -fx-prompt-text-fill: #475569;
+                      -fx-border-color: #334155;
+                      -fx-border-radius: 20;
+                      -fx-background-radius: 20;
+                      -fx-padding: 10 16 10 16;
+                      -fx-font-size: 14px;"/>
 
-                <Button fx:id="sendButton"
-                        text="Send"
-                        onAction="#handleSend"
-                        style="-fx-background-color: #3B82F6;
-                               -fx-text-fill: white;
-                               -fx-font-size: 13px;
-                               -fx-font-weight: bold;
-                               -fx-background-radius: 20;
-                               -fx-padding: 10 20 10 20;
-                               -fx-cursor: hand;"/>
-            </HBox>
+    <Button fx:id="sendButton"
+            text="Send"
+            onAction="#handleSend"
+            style="-fx-background-color: #3B82F6;
+                   -fx-text-fill: white;
+                   -fx-font-size: 13px;
+                   -fx-font-weight: bold;
+                   -fx-background-radius: 20;
+                   -fx-padding: 10 20 10 20;
+                   -fx-cursor: hand;"/>
+</HBox>
         </VBox>
     </center>
 

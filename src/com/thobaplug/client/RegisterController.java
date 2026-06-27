@@ -22,13 +22,14 @@ public class RegisterController implements IMessageListener {
 
     @FXML
     public void initialize() {
-        client = new Client(this);
-        if (!client.connect()) {
+        client = Client.getInstance();
+        client.setMessageListener(this);
+        if (!client.isConnected()) {
             showError("Cannot connect to server. Is it running?");
             registerButton.setDisable(true);
         }
     }
-
+    
     @FXML
     private void handleRegister() {
         String username = usernameField.getText().trim();

@@ -11,18 +11,29 @@ public class Client {
     private static final String SERVER_HOST = "localhost";
     private static final int    SERVER_PORT = 5000;
 
+    private static Client instance;
     private Socket socket;
     private BufferedReader reader;
     private PrintWriter writer;
     private Gson gson;
     private IMessageListener messageListener;
     private String username;
+    private volatile boolean running = false;
 
 
 
     public Client(IMessageListener listener) {
         this.messageListener = listener;
         this.gson = new Gson();
+    }
+    public static Client getInstance() {
+        if (instance == null) {
+            instance = new Client(null);
+        }
+        return instance;
+    }
+    public static void resetInstance() {
+        instance = null;
     }
 
     // Connect to server
@@ -42,19 +53,21 @@ public class Client {
 
     // Listen for messages from server on background thread
     private void startListening() {
+        running = true;
         Thread listenerThread = new Thread(() -> {
             try {
                 String raw;
-                while ((raw = reader.readLine()) != null) {
-                    JsonObject json = gson.fromJson(raw, JsonObject.class);
+                while (running && (raw = reader.readLine()) != null) {
+                    System.out.println("RAW from server: " + raw);
                     if (messageListener != null) {
+                        JsonObject json = gson.fromJson(raw, JsonObject.class);
                         messageListener.onMessageReceived(json);
                     }
                 }
             } catch (IOException e) {
-                System.out.println("Lost connection to server");
+                if (running) System.out.println("✗ Lost connection to server");
             } finally {
-                if (messageListener != null) {
+                if (messageListener != null && running) {
                     messageListener.onDisconnected();
                 }
             }
@@ -109,18 +122,27 @@ public class Client {
         send(json.toString());
     }
 
-    // Disconnect cleanly
     public void disconnect() {
+        running = false;
+        messageListener = null;
         try {
-            JsonObject json = new JsonObject();
-            json.addProperty("type", "DISCONNECT");
-            send(json.toString());
             if (socket != null && !socket.isClosed()) socket.close();
             System.out.println("✓ Disconnected from server");
         } catch (IOException e) {
             System.out.println("✗ Error disconnecting: " + e.getMessage());
         }
     }
+    public void requestUserList() {
+        JsonObject json = new JsonObject();
+        json.addProperty("type", "GET_USER_LIST");
+        send(json.toString());
+    }
+    public void requestHistory() {
+        JsonObject json = new JsonObject();
+        json.addProperty("type", "GET_HISTORY");
+        send(json.toString());
+    }
+   
     public void setMessageListener(IMessageListener listener) {
         this.messageListener = listener;
     }
