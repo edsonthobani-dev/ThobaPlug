@@ -1,4 +1,4 @@
-# ET Mtshiliba University Of Johannesburg
+# ET Mtshiliba 
 # ThobaPlug 💬
 
 A real-time multi-user chat application built with Java, JavaFX, and SQL Server.
@@ -169,5 +169,6 @@ on every operation.
 ## Author
 
 **Thobani** — [@edsonthobani-dev](https://github.com/edsonthobani-dev)
+**Call** - [Thobani](0680699772)
 
 Second-year Computer Science & Informatics student 
