@@ -43,7 +43,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("ClientHandler started: " + Thread.currentThread().getName());
+       
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             writer = new PrintWriter(socket.getOutputStream(), true);
@@ -139,8 +139,7 @@ public class ClientHandler implements Runnable {
     private void handleLogin(JsonObject json) {
         String username = json.get("username").getAsString();
         String password = json.get("password").getAsString();
-        System.out.println("LOGIN attempt for: " + username + 
-                           " from thread: " + Thread.currentThread().getName());
+        
 
         if (onlineClients.containsKey(username)) {
             ClientHandler oldHandler = onlineClients.get(username);

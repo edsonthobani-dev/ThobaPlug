@@ -46,7 +46,7 @@ public class ChatController implements IMessageListener {
     private ScheduledExecutorService typingClearScheduler;
 
     public void initChat(Client client, String username) {
-        System.out.println("initChat() called - instance: " + this.hashCode());
+       
         this.client   = client;
         this.username = username;
         usernameLabel.setText(username);
@@ -68,7 +68,7 @@ public class ChatController implements IMessageListener {
     }
     @FXML
     public void initialize() {
-        System.out.println("ChatController initialize() called - instance: " + this.hashCode());
+       //
     }
     @FXML
     private void handleSend() {
@@ -139,7 +139,7 @@ public class ChatController implements IMessageListener {
 
             case "HISTORY":
                 String histJson = message.get("messages").getAsString();
-                System.out.println("RAW HISTORY JSON: " + histJson);
+                
                 JsonArray history = gson.fromJson(histJson, JsonArray.class);
                 Platform.runLater(() -> loadHistory(history));
                 break;

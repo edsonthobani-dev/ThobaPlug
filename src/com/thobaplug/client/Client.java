@@ -58,7 +58,7 @@ public class Client {
             try {
                 String raw;
                 while (running && (raw = reader.readLine()) != null) {
-                    System.out.println("RAW from server: " + raw);
+                 
                     if (messageListener != null) {
                         JsonObject json = gson.fromJson(raw, JsonObject.class);
                         messageListener.onMessageReceived(json);
