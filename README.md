@@ -147,6 +147,10 @@ CREATE TABLE Messagee (
 4. Register an account and start chatting
 5. Run multiple `Main.java` instances to chat between users
 
+## Screenshots
+
+![Login](screenshots/login.png)
+![Chat](screenshots/chat.png)
 ---
 
 ## Key Design Decisions
