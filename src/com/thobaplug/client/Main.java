@@ -15,7 +15,7 @@ public class Main extends Application {
         client.connect();
 
         Parent root = FXMLLoader.load(
-            getClass().getResource("/resources/LoginScreen.fxml"));
+        			getClass().getResource("/resources/LoginScreen.fxml"));
         Scene scene = new Scene(root, 480, 600);
         primaryStage.setTitle("ThobaPlug");
         primaryStage.setScene(scene);

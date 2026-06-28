@@ -22,7 +22,7 @@
                           -fx-font-weight: bold;
                           -fx-text-fill: #3B82F6;"/>
 
-            <Label text="Global Chat"
+            <Label text="Global Chat Room"
                    style="-fx-font-size: 13px;
                           -fx-text-fill: #64748B;"/>
 
@@ -71,7 +71,9 @@
             <ListView fx:id="onlineUsersList"
                       VBox.vgrow="ALWAYS"
                       style="-fx-background-color: transparent;
-                             -fx-border-color: transparent;"/>
+                             -fx-border-color: transparent;
+                             -fx-background: #1E293B;
+							 -fx-control-inner-background: #1E293B;"/>
         </VBox>
     </left>
 

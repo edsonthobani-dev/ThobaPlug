@@ -27,3 +27,136 @@
 [2026-06-27 17:03:42] [INFO] Thobani left. Online: 0
 [2026-06-27 17:03:42] [INFO] New connection from: 127.0.0.1
 [2026-06-27 17:03:45] [WARNING] Unknown client disconnected before login
+[2026-06-27 18:14:45] [INFO] ****************************************
+[2026-06-27 18:14:45] [INFO] ThobaPlug Server Started
+[2026-06-27 18:14:45] [INFO] ****************************************
+[2026-06-27 18:14:45] [INFO] ThobaPlug server started on port 5000
+[2026-06-27 18:15:08] [INFO] New connection from: 127.0.0.1
+[2026-06-27 18:15:30] [INFO] Thobani joined. Online: 1
+[2026-06-27 18:15:46] [INFO] New connection from: 127.0.0.1
+[2026-06-27 18:16:10] [INFO] Edison joined. Online: 2
+[2026-06-27 18:24:42] [INFO] ****************************************
+[2026-06-27 18:24:42] [INFO] ThobaPlug Server Started
+[2026-06-27 18:24:42] [INFO] ****************************************
+[2026-06-27 18:24:43] [INFO] ThobaPlug server started on port 5000
+[2026-06-27 18:24:54] [INFO] New connection from: 127.0.0.1
+[2026-06-27 18:25:23] [INFO] Thobani joined. Online: 1
+[2026-06-27 18:25:35] [INFO] New connection from: 127.0.0.1
+[2026-06-27 18:27:59] [INFO] Thabo joined. Online: 2
+[2026-06-27 18:28:55] [INFO] Thobani left. Online: 1
+[2026-06-27 18:28:55] [INFO] New connection from: 127.0.0.1
+[2026-06-27 18:28:58] [WARNING] Unknown client disconnected before login
+[2026-06-27 18:28:59] [INFO] Thabo left. Online: 0
+[2026-06-27 18:28:59] [INFO] New connection from: 127.0.0.1
+[2026-06-27 19:27:22] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:27:23] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:28:55] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:28:56] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:35:29] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:35:29] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:35:35] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:35:36] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:36:14] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:36:14] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:36:14] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:36:18] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:36:18] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:36:21] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:36:21] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:36:26] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:36:26] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:36:56] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:36:56] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:37:56] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:37:57] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:37:57] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:41:56] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:41:58] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:42:11] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:42:12] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:42:20] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:42:20] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:42:58] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:42:58] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:42:58] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:52:58] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:53:00] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:53:01] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:56:10] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:56:11] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:59:23] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:59:23] [WARNING] Unknown client disconnected before login
+[2026-06-27 19:59:33] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 19:59:34] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:00:29] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:00:40] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:00:41] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:02:27] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:02:27] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:04:33] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:04:33] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:04:36] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:04:36] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:05:40] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:05:40] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:06:19] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:06:53] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:06:53] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:06:54] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:06:54] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:06:54] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:06:59] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:06:59] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:08:38] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:08:38] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:08:46] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:11:02] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:11:02] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:11:02] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:11:03] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:11:03] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:11:08] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:11:09] [WARNING] Unknown client disconnected before login
+[2026-06-27 20:23:01] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:23:02] [INFO] New connection from: 0:0:0:0:0:0:0:1
+[2026-06-27 20:42:09] [INFO] ****************************************
+[2026-06-27 20:42:09] [INFO] ThobaPlug Server Started
+[2026-06-27 20:42:09] [INFO] ****************************************
+[2026-06-27 20:42:09] [INFO] ThobaPlug server started on port 5000
+[2026-06-27 20:42:19] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:42:46] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:43:24] [INFO] Lwandile joined. Online: 1
+[2026-06-27 20:43:37] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:43:57] [INFO] Thobani joined. Online: 2
+[2026-06-27 20:45:05] [INFO] Edison joined. Online: 3
+[2026-06-27 20:45:52] [INFO] Thobani left. Online: 2
+[2026-06-27 20:45:52] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:46:00] [INFO] Lwandile left. Online: 1
+[2026-06-27 20:46:00] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:46:06] [INFO] Edison left. Online: 0
+[2026-06-27 20:46:06] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:53:30] [INFO] ****************************************
+[2026-06-27 20:53:30] [INFO] ThobaPlug Server Started
+[2026-06-27 20:53:30] [INFO] ****************************************
+[2026-06-27 20:53:30] [INFO] ThobaPlug server started on port 5000
+[2026-06-27 20:53:54] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:56:07] [INFO] Test joined. Online: 1
+[2026-06-27 20:56:37] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:56:52] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:57:53] [INFO] Thobani joined. Online: 2
+[2026-06-27 20:58:07] [INFO] Thobani left. Online: 1
+[2026-06-27 20:58:07] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:58:41] [INFO] Thobani joined. Online: 2
+[2026-06-27 20:58:49] [INFO] Thobani left. Online: 1
+[2026-06-27 20:58:49] [INFO] New connection from: 127.0.0.1
+[2026-06-27 20:59:17] [INFO] Thobani joined. Online: 2
+[2026-06-27 20:59:47] [INFO] Edison joined. Online: 3
+[2026-06-27 21:00:22] [INFO] Edison left. Online: 2
+[2026-06-27 21:00:22] [INFO] New connection from: 127.0.0.1
+[2026-06-27 21:01:10] [INFO] Test joined. Online: 2
+[2026-06-27 21:01:43] [INFO] Test left. Online: 1
+[2026-06-27 21:01:43] [INFO] New connection from: 127.0.0.1
+[2026-06-27 21:01:46] [INFO] New connection from: 127.0.0.1
+[2026-06-27 21:01:46] [INFO] Thobani left. Online: 0
+[2026-06-27 21:02:09] [INFO] Test left. Online: 0
+[2026-06-27 21:02:09] [INFO] New connection from: 127.0.0.1

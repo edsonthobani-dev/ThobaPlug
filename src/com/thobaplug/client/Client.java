@@ -65,11 +65,11 @@ public class Client {
                             messageListener.onMessageReceived(json);
                         }
                     } catch (Exception e) {
-                        System.out.println("✗ Failed to parse message: " + e.getMessage());
+                        System.out.println("Failed to parse message: " + e.getMessage());
                     }
                 }
             } catch (IOException e) {
-                if (running) System.out.println("✗ Lost connection to server");
+                if (running) System.out.println("Lost connection to server");
             } finally {
                 if (messageListener != null && running) {
                     messageListener.onDisconnected();
@@ -131,9 +131,9 @@ public class Client {
         messageListener = null;
         try {
             if (socket != null && !socket.isClosed()) socket.close();
-            System.out.println("✓ Disconnected from server");
+            System.out.println("Disconnected from server");
         } catch (IOException e) {
-            System.out.println("✗ Error disconnecting: " + e.getMessage());
+            System.out.println("Error disconnecting: " + e.getMessage());
         }
     }
     public void requestUserList() {

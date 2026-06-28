@@ -19,7 +19,7 @@
     <Label text="ThobaPlug"
            style="-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #3B82F6;"/>
 
-    <Label text="Connect with everyone"
+    <Label text="Connect and Share a laugh with everyone"
            style="-fx-font-size: 14px; -fx-text-fill: #64748B;"/>
 
     <VBox spacing="5" maxWidth="300">

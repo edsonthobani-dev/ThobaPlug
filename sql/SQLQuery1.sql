@@ -30,3 +30,16 @@ DELETE FROM Userr;
 
 USE dbThobaPlug;
 SELECT * FROM Messagee;
+
+
+USE master;
+ALTER LOGIN ndabane_user ENABLE;
+ALTER LOGIN ndabane_user WITH PASSWORD = 'Admin123!';
+
+USE master;
+SELECT name, is_disabled FROM sys.server_principals WHERE name = 'ndabane_user';
+USE master;
+ALTER LOGIN ndabane_user WITH PASSWORD = 'Admin123!';
+
+ALTER LOGIN ndabane_user ENABLE;
+ALTER LOGIN ndabane_user WITH PASSWORD = 'Admin123!';

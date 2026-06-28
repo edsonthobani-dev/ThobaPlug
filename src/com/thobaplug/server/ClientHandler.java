@@ -44,11 +44,11 @@ public class ClientHandler implements Runnable {
 				this.userDAO       = new UserDAO();
 				this.messageDAO    = new MessageDAO();
 				this.gson          = new GsonBuilder()
-														.registerTypeAdapter(LocalDateTime.class,
-														   (com.google.gson.JsonSerializer<java.time.LocalDateTime>)
-														   (src, typeOfSrc, context) -> 
-														       new com.google.gson.JsonPrimitive(src.toString()))
-														.create();
+													.registerTypeAdapter(LocalDateTime.class,
+													 (com.google.gson.JsonSerializer<java.time.LocalDateTime>)
+													 (src, typeOfSrc, context) -> 
+													 new com.google.gson.JsonPrimitive(src.toString()))
+													 .create();
 														}
     @Override
     public void run() {
@@ -109,14 +109,18 @@ public class ClientHandler implements Runnable {
                 		break;
                 	}
                 case "GET_HISTORY":
-                    if (currentUser != null) sendHistory();
-                    else sendMessage(buildResponse("ERROR", "Not authenticated"));
-                    break;
+                {
+                	 if (currentUser != null) sendHistory();
+                     else sendMessage(buildResponse("ERROR", "Not authenticated"));
+                     break;	
+                }
                 case "GET_USER_LIST":
+                {
                     if (currentUser != null) sendUserListToMe();
                     else sendMessage(buildResponse("ERROR", "Not authenticated"));
                     break;
                    
+                }
                 default:
                     sendMessage(buildResponse("ERROR", "Unknown message type"));
             }
@@ -291,9 +295,9 @@ public class ClientHandler implements Runnable {
             historyMsg.addProperty("type", "HISTORY");
             historyMsg.addProperty("messages", arr.toString());
             sendMessage(historyMsg.toString());
-            System.out.println("✓ History sent: " + history.size() + " messages");
+            System.out.println("History sent: " + history.size() + " messages");
         } catch (Exception e) {
-            System.out.println("✗ sendHistory error: " + e.getMessage());
+            System.out.println("sendHistory error: " + e.getMessage());
         }
     }
 
@@ -322,7 +326,7 @@ public class ClientHandler implements Runnable {
             }
             if (socket != null && !socket.isClosed()) socket.close();
         } catch (IOException e) {
-            System.out.println("✗ Error closing socket: " + e.getMessage());
+            System.out.println("Error closing socket: " + e.getMessage());
         }
     }
 

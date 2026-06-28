@@ -27,11 +27,11 @@ public class DatabaseManager {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(URL);
-            System.out.println("✓ Connected to dbThobaPlug successfully.");
+            System.out.println("Connected to dbThobaPlug successfully.");
         } catch (ClassNotFoundException e) {
-            System.out.println("✗ JDBC Driver not found: " + e.getMessage());
+            System.out.println("JDBC Driver not found: " + e.getMessage());
         } catch (SQLException e) {
-            System.out.println("✗ Database connection failed: " + e.getMessage());
+            System.out.println("Database connection failed: " + e.getMessage());
         }
     }
 
@@ -50,10 +50,10 @@ public class DatabaseManager {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("✓ Database connection closed.");
+                System.out.println("Database connection closed.");
             }
         } catch (SQLException e) {
-            System.out.println("✗ Error closing connection: " + e.getMessage());
+            System.out.println("Error closing connection: " + e.getMessage());
         }
     }
 }

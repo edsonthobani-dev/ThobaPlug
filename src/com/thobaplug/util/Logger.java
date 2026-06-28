@@ -20,11 +20,11 @@ public class Logger {
     private Logger() {
         try {
             fileWriter = new PrintWriter(new FileWriter(LOG_FILE, true));
-            log("INFO", "═══════════════════════════════════════");
+            log("INFO", "****************************************");
             log("INFO", "ThobaPlug Server Started");
-            log("INFO", "═══════════════════════════════════════");
+            log("INFO", "****************************************");
         } catch (IOException e) {
-            System.out.println("✗ Logger failed to initialise: " + e.getMessage());
+            System.out.println("Logger failed to initialise: " + e.getMessage());
         }
     }
 

@@ -38,10 +38,10 @@ public class MessageDAO {
             stmt.setNString(3, message.getContent());
             stmt.setBoolean(4, message.isIs_private());
             int rows = stmt.executeUpdate();
-            System.out.println("✓ Message saved, rows affected: " + rows);
+            System.out.println("Message saved, rows affected: " + rows);
             return true;
         } catch (SQLException e) {
-            System.out.println("✗ Save message failed: " + e.getMessage());
+            System.out.println("Save message failed: " + e.getMessage());
             return false;
         }
     }
@@ -76,9 +76,9 @@ public class MessageDAO {
                 msg.setSent_at(rs.getTimestamp("sent_at").toLocalDateTime());
                 messages.add(msg);
             }
-            System.out.println("✓ History loaded: " + messages.size() + " messages");
+            System.out.println("History loaded: " + messages.size() + " messages");
         } catch (SQLException e) {
-            System.out.println("✗ Load global history failed: " + e.getMessage());
+            System.out.println("Load global history failed: " + e.getMessage());
         }
         return messages;
     }
